@@ -30,7 +30,11 @@ namespace Afdian.Server.Controllers.Afdian
             Console.WriteLine(DateTime.Now.ToString());
             Console.WriteLine(jsonStr);
 
-            return Ok();
+            return Ok(new
+            {
+                ec = 200,
+                em = ""
+            });
         }
 
 
