@@ -24,6 +24,14 @@
 		<PackageReference Include="Telegram.Bot" Version="17.0.0" />
 	</ItemGroup>
 
+	<!-- 方便开发debug,与发布到nuget -->
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<PackageReference Include="Afdian.Sdk" Version="0.0.1" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<ProjectReference Include="..\Afdian.Sdk\Afdian.Sdk.csproj" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<Folder Include="wwwroot\" />
 	</ItemGroup>

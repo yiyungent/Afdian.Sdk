@@ -1,7 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+		<Version>0.0.1</Version>
+		<Company>yiyun</Company>
+		<Authors>yiyun</Authors>
+		<Description>爱发电 非官方 .NET SDK</Description>
+		<Copyright>Copyright (c) 2021-present yiyun</Copyright>
+		<RepositoryUrl>https://github.com/yiyungent/Afdian.Sdk</RepositoryUrl>
+		<PackageLicenseUrl>https://github.com/yiyungent/Afdian.Sdk/blob/main/LICENSE</PackageLicenseUrl>
+		<PackageTags>Afdian Afdian.Sdk</PackageTags>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	</PropertyGroup>
+
+	<!-- 生成注释xml -->
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+		<DocumentationFile>bin\Release\netstandard2.0\Afdian.Sdk.xml</DocumentationFile>
+	</PropertyGroup>
 
 </Project>
