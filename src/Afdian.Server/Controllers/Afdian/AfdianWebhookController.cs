@@ -66,6 +66,13 @@ namespace Afdian.Server.Controllers.Afdian
                               $"折扣: {requestModel.data.order.discount} \n" +
                               $"类型: {productType} \n");
             }
+            else
+            {
+                await _botClient.SendTextMessageAsync(
+                        chatId: this.TgBotConfiguration.AdminChatId,
+                        text: $"爱发电 Webhook 测试 \n" +
+                              $" - https://afdian.net/dashboard/dev");
+            }
 
 
             return Ok(new
