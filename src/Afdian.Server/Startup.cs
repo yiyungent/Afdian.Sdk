@@ -17,6 +17,10 @@ namespace Afdian.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<TgBotConfiguration>(Configuration.GetSection("TgBotConfiguration"));
+            services.Configure<AfdianConfiguration>(Configuration.GetSection("AfdianConfiguration"));
+
+
             // There are several strategies for completing asynchronous tasks during startup.
             // Some of them could be found in this article https://andrewlock.net/running-async-tasks-on-app-startup-in-asp-net-core-part-1/
             // We are going to use IHostedService to add and later remove Webhook
@@ -70,8 +74,13 @@ namespace Afdian.Server
                 // Since nobody else knows your bot's token, you can be pretty sure it's us.
                 var token = TgBotConfig.BotToken;
                 endpoints.MapControllerRoute(name: "tgwebhook",
-                                             pattern: $"tgbot/{token}",
+                                             pattern: $"webhook/tgbot/{token}",
                                              new { controller = "TgWebhook", action = "Post" });
+
+                string vToken = "";
+                endpoints.MapControllerRoute(name: "afdianwebhook",
+                                             pattern: $"webhook/afdian/{vToken}",
+                                             new { controller = "AfdianWebhook", action = "Post" });
                 endpoints.MapControllers();
             });
         }

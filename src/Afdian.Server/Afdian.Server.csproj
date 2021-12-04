@@ -42,9 +42,4 @@
 		</None>
 	</ItemGroup>
 
-
-	<ItemGroup>
-		<Folder Include="Controllers\Afdian\" />
-	</ItemGroup>
-
 </Project>
