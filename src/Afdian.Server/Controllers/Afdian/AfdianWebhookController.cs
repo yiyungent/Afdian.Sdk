@@ -23,7 +23,7 @@ namespace Afdian.Server.Controllers.Afdian
             this.AfdianConfiguration = optionsMonitor.CurrentValue;
         }
 
-        [HttpPost]
+        [HttpPost, HttpGet]
         public async Task<IActionResult> Post([FromBody] AfdianWebhookRequestModel requestModel, [FromRoute] string vToken)
         {
             if (string.IsNullOrEmpty(vToken) || vToken != this.AfdianConfiguration.VToken)
