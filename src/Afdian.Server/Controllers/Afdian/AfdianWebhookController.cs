@@ -13,7 +13,7 @@ namespace Afdian.Server.Controllers.Afdian
     /// Webhook URL（用来被动接收订单通知）
     /// </summary>
     //[Route("api/[controller]")]
-    [ApiController]
+    //[ApiController]
     public class AfdianWebhookController : ControllerBase
     {
         public AfdianConfiguration AfdianConfiguration { get; set; }

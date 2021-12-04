@@ -6,7 +6,7 @@ using Telegram.Bot.Types;
 namespace Afdian.Server.Controllers.Telegram
 {
     //[Route("api/[controller]")]
-    [ApiController]
+    //[ApiController]
     public class TgWebhookController : ControllerBase
     {
         [HttpPost]
