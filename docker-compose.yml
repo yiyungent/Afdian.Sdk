@@ -4,7 +4,7 @@ version: '3.4'
 
 services:
   afdian-server.service:
-    image: yiyungent/afdian-server
+    image: ghcr.io/yiyungent/afdian-server # 使用 GitHub 的 ghcr.io , 因为 阿里 Docker Hub 镜像 同步延迟较长
     container_name: afdian-server-container
     ports:
       - "1207:80"

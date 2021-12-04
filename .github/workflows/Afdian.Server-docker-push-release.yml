@@ -83,7 +83,7 @@ jobs:
             #docker-compose down                          # TODO: docker-compose: command not found. 不知道为什么找不到 docker-compose，但直接连接服务器执行就可以
             /usr/local/python3/bin/docker-compose down
             # 删除旧镜像
-            docker rmi ${{ secrets.DOCKER_USERNAME }}/${{ steps.vars.outputs.IMAGE_NAME }}
+            docker rmi ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ steps.vars.outputs.IMAGE_NAME }}
             # 登录镜像服务器
             docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} 
             # 创建并启动容器
