@@ -24,16 +24,10 @@ namespace Afdian.Server.Controllers.Afdian
         }
 
         [HttpPost, HttpGet]
-        public async Task<IActionResult> Post([FromBody] AfdianWebhookRequestModel requestModel, [FromRoute] string vToken)
+        public async Task<IActionResult> Post(AfdianWebhookRequestModel requestModel)
         {
-            if (string.IsNullOrEmpty(vToken) || vToken != this.AfdianConfiguration.VToken)
-            {
-                return NotFound();
-            }
-
             string jsonStr = Newtonsoft.Json.JsonConvert.SerializeObject(requestModel);
             Console.WriteLine(DateTime.Now.ToString());
-            Console.WriteLine($"vToken: ", vToken);
             Console.WriteLine(jsonStr);
 
             return Ok();

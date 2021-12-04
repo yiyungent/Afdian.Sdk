@@ -6,14 +6,20 @@ namespace Afdian.Server
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             TgBotConfig = Configuration.GetSection("TgBotConfiguration").Get<TgBotConfiguration>();
+            AfdianConfig = Configuration.GetSection("AfdianConfiguration").Get<AfdianConfiguration>();
+            Environment = env;
         }
 
         public IConfiguration Configuration { get; }
         private TgBotConfiguration TgBotConfig { get; }
+
+        private AfdianConfiguration AfdianConfig { get; }
+
+        private IWebHostEnvironment Environment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -24,7 +30,10 @@ namespace Afdian.Server
             // There are several strategies for completing asynchronous tasks during startup.
             // Some of them could be found in this article https://andrewlock.net/running-async-tasks-on-app-startup-in-asp-net-core-part-1/
             // We are going to use IHostedService to add and later remove Webhook
-            services.AddHostedService<ConfigureTgWebhook>();
+            if (Environment.IsProduction())
+            {
+                services.AddHostedService<ConfigureTgWebhook>();
+            }
 
             // Register named HttpClient to get benefits of IHttpClientFactory
             // and consume it with ITelegramBotClient typed client.
@@ -77,10 +86,11 @@ namespace Afdian.Server
                                              pattern: $"webhook/tgbot/{token}",
                                              new { controller = "TgWebhook", action = "Post" });
 
-                string vToken = "";
+                string vToken = AfdianConfig.VToken;
                 endpoints.MapControllerRoute(name: "afdianwebhook",
                                              pattern: $"webhook/afdian/{vToken}",
                                              new { controller = "AfdianWebhook", action = "Post" });
+
                 endpoints.MapControllers();
             });
         }
