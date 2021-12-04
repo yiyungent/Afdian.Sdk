@@ -26,7 +26,7 @@ jobs:
       
       - name: Build Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ steps.vars.outputs.IMAGE_NAME }}:${{ steps.last_release.outputs.tag_name }}-beta -f examples/Afdian.Server/Dockerfile .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ steps.vars.outputs.IMAGE_NAME }}:${{ steps.last_release.outputs.tag_name }}-beta -f src/Afdian.Server/Dockerfile .
 
       - name: Login to Registry - Docker Hub
         run: docker login --username=${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
