@@ -11,6 +11,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 		<PackageReference Include="Telegram.Bot" Version="17.0.0" />
@@ -18,14 +19,15 @@
 
 	<!-- 方便开发debug,与发布到nuget -->
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="Afdian.Sdk" Version="0.0.1" />
+		<PackageReference Include="Afdian.Sdk" Version="0.2.0" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
 		<ProjectReference Include="..\Afdian.Sdk\Afdian.Sdk.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="wwwroot\" />
+		<Folder Include="wwwroot\js\" />
+		<Folder Include="wwwroot\libs\" />
 	</ItemGroup>
 
 	<ItemGroup>
