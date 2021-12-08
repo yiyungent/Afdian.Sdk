@@ -1,8 +1,11 @@
 ﻿using Afdian.Sdk;
 using Afdian.Server.Configuration;
+using Afdian.Server.RequestModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Afdian.Server.Models;
+using System.Linq;
 
 namespace Afdian.Server.Controllers
 {
@@ -14,10 +17,14 @@ namespace Afdian.Server.Controllers
 
         private readonly ILogger<BadgeController> _logger;
 
+        private readonly ApplicationDbContext _applicationDbContext;
+
         #region Ctor
-        public BadgeController(IOptionsMonitor<AfdianConfiguration> afdianConfigurationOptionsMonitor, ILogger<BadgeController> logger)
+        public BadgeController(IOptionsMonitor<AfdianConfiguration> afdianConfigurationOptionsMonitor, ApplicationDbContext applicationDbContext,
+            ILogger<BadgeController> logger)
         {
             this.AfdianConfiguration = afdianConfigurationOptionsMonitor.CurrentValue;
+            _applicationDbContext = applicationDbContext;
             _logger = logger;
         }
         #endregion
@@ -25,7 +32,7 @@ namespace Afdian.Server.Controllers
         #region Actions
 
         [Route("/badge.svg")]
-        [HttpGet, HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Badge([FromQuery] string badgeToken)
         {
             badgeToken = System.Net.WebUtility.UrlDecode(badgeToken);
@@ -42,18 +49,44 @@ namespace Afdian.Server.Controllers
         }
 
         [Route("/{id}/badge.svg")]
-        [HttpGet, HttpPost]
-        public async Task<IActionResult> Badge([FromRoute] int id)
+        [HttpGet]
+        public async Task<IActionResult> Badge([FromRoute] int id, [FromQuery] BadgeRequestModel badgeRequestModel)
         {
             // TODO: 根据 id 查询数据库
-            string userId = "";
-            string token = "";
+            Badge badge = _applicationDbContext.Badge?.FirstOrDefault(m => m.Id == id);
+            if (badge == null)
+            {
+                return NotFound();
+            }
+            string userId = badge.UserId;
+            string token = badge.Token;
 
             return await Task.FromResult(MakeBadgeSvg(userId, token));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Create(string userId, string token)
+        {
+            AfdianClient afdianClient = new AfdianClient(userId, token);
+            var jsonStr = await afdianClient.PingAsync();
+            if (!jsonStr.Contains("200"))
+            {
+                return Content("不合法的 user_id, token");
+            }
+            Badge badge = new Badge()
+            {
+                CreateTime = DateTime.Now,
+                UserId = userId,
+                Token = token
+            };
+            await _applicationDbContext.Badge.AddAsync(badge);
+            await _applicationDbContext.SaveChangesAsync();
+
+            return Content(badge.Id.ToString());
+        }
+
         [Route("/{userId}/{token}/badge.svg")]
-        [HttpGet, HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Badge([FromRoute] string userId, [FromRoute] string token)
         {
             // 注意: 不要给 将 planId 放入参数列表, 否则变成必需项
@@ -92,7 +125,7 @@ namespace Afdian.Server.Controllers
             svgStr = svgStr.Replace("{{count}}", sponsorCount.ToString()).Replace("{{countTextLength}}", countTextLength.ToString());
 
             return Content(svgStr, "image/svg+xml;charset=utf-8");
-        } 
+        }
 
         #endregion
 

@@ -2,6 +2,9 @@
 {
     public class AfdianConfiguration
     {
+        /// <summary>
+        /// afdian Webhook 路径效验 vToken
+        /// </summary>
         public string VToken { get; set; }
 
         public string UserId { get; set; }

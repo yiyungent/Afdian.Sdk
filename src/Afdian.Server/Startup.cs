@@ -1,5 +1,6 @@
 ﻿using Afdian.Server.Configuration;
 using Afdian.Server.Services;
+using Microsoft.EntityFrameworkCore;
 using Telegram.Bot;
 
 namespace Afdian.Server
@@ -57,6 +58,10 @@ namespace Afdian.Server
             //   https://docs.microsoft.com/en-us/aspnet/core/web-api/advanced/formatting?view=aspnetcore-5.0#add-newtonsoftjson-based-json-format-support
             services.AddControllers()
                 .AddNewtonsoftJson();
+
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<Models.ApplicationDbContext>(options=>
+                options.UseSqlite(connectionString));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -72,9 +77,10 @@ namespace Afdian.Server
             app.UseRouting();
             app.UseCors();
 
-            app.UseAuthorization();
-
+            app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

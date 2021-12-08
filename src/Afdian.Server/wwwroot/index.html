@@ -2,9 +2,32 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Afdian.Server | Afdian.Sdk | 爱发电 非官方 .NET SDK</title>
+    <!-- 移动端设置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
-    <div>Hello World!</div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col align-self-center">
+                <div class="form">
+                    <div class="form-group">
+                        <label>user_id</label>
+                        <input id="js-input-userId" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>token</label>
+                        <input id="js-input-token" type="text" class="form-control">
+                    </div>
+                    <button id="js-btn-getBadge-1" class="btn btn-info btn-block" style="margin-top:14px;">获取Badge - 显式UserId,Token</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

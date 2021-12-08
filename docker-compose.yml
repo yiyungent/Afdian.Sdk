@@ -16,6 +16,7 @@ services:
       - ASPNETCORE_URLS=http://*:80
     volumes:
       # 注意: Linux 下 区分大小写
+      - ./App_Data:/app/App_Data
       # - ./appsettings.json:/app/appsettings.json // 无法使用 docker-compose 此方法 挂载单个文件, 使用下方挂载单个文件
       - type: bind
         source: ./appsettings.json
