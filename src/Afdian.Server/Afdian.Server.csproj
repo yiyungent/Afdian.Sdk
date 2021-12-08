@@ -26,7 +26,16 @@
 		<ProjectReference Include="..\Afdian.Sdk\Afdian.Sdk.csproj" />
 	</ItemGroup>
 
+	<!-- 生成注释xml -->
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+		<DocumentationFile>bin\Release\net6.0\Afdian.Server.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+		<DocumentationFile>bin\Debug\net6.0\Afdian.Server.xml</DocumentationFile>
+	</PropertyGroup>
+
 	<ItemGroup>
+		<Folder Include="ResponseModels\" />
 		<Folder Include="wwwroot\libs\" />
 	</ItemGroup>
 

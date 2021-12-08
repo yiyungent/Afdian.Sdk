@@ -8,6 +8,9 @@ namespace Afdian.Server.RequestModels
     /// </summary>
     public class BadgeRequestModel
     {
+        /// <summary>
+        /// 过滤 方案ID
+        /// </summary>
         public string PlanId { get; set; } = "";
 
 

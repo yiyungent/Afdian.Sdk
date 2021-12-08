@@ -50,7 +50,19 @@ namespace Afdian.Server
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "爱发电 Badge",
+                    Description = "爱发电 Badge - 由 Afdian.Server 构建",
+                    TermsOfService = new Uri("https://github.com/yiyungent/Afidan.Sdk")
+                });
+
+                var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            });
 
             // The Telegram.Bot library heavily depends on Newtonsoft.Json library to deserialize
             // incoming webhook updates and send serialized responses back.
@@ -59,8 +71,10 @@ namespace Afdian.Server
             services.AddControllers()
                 .AddNewtonsoftJson();
 
+            services.AddHttpContextAccessor();
+
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<Models.ApplicationDbContext>(options=>
+            services.AddDbContext<Models.ApplicationDbContext>(options =>
                 options.UseSqlite(connectionString));
         }
 
