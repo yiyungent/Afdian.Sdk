@@ -61,12 +61,22 @@ namespace Afdian.Server.Controllers
         /// <summary>
         /// 根据 Badge ID 获取 Badge
         /// </summary>
-        /// <param name="id"></param>
+        /// <remarks>
+        /// 在 README.md 中引用 爱发电 Badge:  
+        /// `[![爱发电](https://afdian.moeci.com/{badgeId}/badge.svg)](https://afdian.net/{爱发电用户名})`
+        /// 
+        /// 例如下方:   
+        /// `[![爱发电](https://afdian.moeci.com/1/badge.svg)](https://afdian.net/@yiyun)`
+        /// 
+        /// [![爱发电](https://afdian.moeci.com/1/badge.svg)](https://afdian.net/@yiyun)
+        /// </remarks>
+        /// <param name="id">Badge ID</param>
         /// <param name="badgeRequestModel"></param>
         /// <returns></returns>
         [Route("/{id}/badge.svg")]
         [HttpGet]
-        [Produces("image/svg+xml;charset=utf-8")]
+        [ProducesResponseType(StatusCodes.Status200OK), Produces("image/svg+xml;charset=utf-8")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Badge([FromRoute] int id, [FromQuery] BadgeRequestModel badgeRequestModel)
         {
             // TODO: 根据 id 查询数据库
@@ -84,18 +94,26 @@ namespace Afdian.Server.Controllers
         /// <summary>
         /// 创建 Badge, 返回 Badge ID
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="token"></param>
+        /// <remarks>
+        /// 爱发电获取 user_id,token:    
+        /// [https://afdian.net/dashboard/dev](https://afdian.net/dashboard/dev)
+        /// </remarks>
+        /// <param name="userId">爱发电 user_id</param>
+        /// <param name="token">爱发电 API Token</param>
         /// <returns>返回 Badge ID</returns>
         [HttpPost]
         [Produces("application/json")]
-        public async Task<IActionResult> Create(string userId, string token)
+        public async Task<ResponseModels.BadgeCreateResponseModel> Create(string userId, string token)
         {
+            ResponseModels.BadgeCreateResponseModel responseModel = new ResponseModels.BadgeCreateResponseModel();
             AfdianClient afdianClient = new AfdianClient(userId, token);
             var jsonStr = await afdianClient.PingAsync();
             if (!jsonStr.Contains("200"))
             {
-                return Content("不合法的 user_id, token");
+                responseModel.code = -1;
+                responseModel.message = "user_id, token 效验不通过";
+
+                return responseModel;
             }
             Badge badge = new Badge()
             {
@@ -107,18 +125,34 @@ namespace Afdian.Server.Controllers
             await _applicationDbContext.Badge.AddAsync(badge);
             await _applicationDbContext.SaveChangesAsync();
 
-            return Content(badge.Id.ToString());
+            responseModel.code = 1;
+            responseModel.message = "成功";
+            responseModel.badgeId = badge.Id;
+
+            return responseModel;
         }
 
         /// <summary>
         /// 显式根据 user_id,token 获取 Badge
         /// </summary>
+        /// <remarks>
+        /// 爱发电获取 user_id,token:    
+        /// [https://afdian.net/dashboard/dev](https://afdian.net/dashboard/dev)
+        /// 
+        /// 在 README.md 中引用 爱发电 Badge:  
+        /// `[![爱发电](https://afdian.moeci.com/{badgeId}/badge.svg)](https://afdian.net/{爱发电用户名})`
+        /// 
+        /// 例如下方:   
+        /// `[![爱发电](https://afdian.moeci.com/1/badge.svg)](https://afdian.net/@yiyun)`  
+        /// 
+        /// [![爱发电](https://afdian.moeci.com/1/badge.svg)](https://afdian.net/@yiyun)
+        /// </remarks>
         /// <param name="userId"></param>
         /// <param name="token"></param>
         /// <returns></returns>
         [Route("/{userId}/{token}/badge.svg")]
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Produces("image/svg+xml;charset=utf-8")]
         public async Task<IActionResult> Badge([FromRoute] string userId, [FromRoute] string token)
         {

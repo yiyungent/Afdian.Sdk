@@ -52,12 +52,24 @@ namespace Afdian.Server
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(options =>
             {
+                // https://docs.microsoft.com/zh-cn/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&tabs=visual-studio
                 options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
                     Version = "v1",
                     Title = "爱发电 Badge",
                     Description = "爱发电 Badge - 由 Afdian.Server 构建",
-                    TermsOfService = new Uri("https://github.com/yiyungent/Afidan.Sdk")
+                    TermsOfService = new Uri("https://github.com/yiyungent/Afdian.Sdk"),
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                    {
+                        Name = "Contact",
+                        Url = new Uri("https://github.com/yiyungent/Afdian.Sdk/issues")
+                    },
+                    License = new Microsoft.OpenApi.Models.OpenApiLicense
+                    {
+                        Name = "MIT License",
+                        Url = new Uri("https://github.com/yiyungent/Afdian.Sdk/blob/main/LICENSE")
+                    },
+                    //Extensions = new Microsoft.OpenApi.Models.OpenApiExtensibleDictionary<string, string>() { }
                 });
 
                 var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
