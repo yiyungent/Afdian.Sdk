@@ -42,7 +42,7 @@ namespace Afdian.Sdk
             return sign;
         }
 
-        public async Task<string> Ping()
+        public async Task<string> PingAsync()
         {
             string url = $"{this.ApiBaseUrl}ping";
 
@@ -66,7 +66,12 @@ namespace Afdian.Sdk
             });
         }
 
-        public async Task<string> QueryOrder(int page = 1)
+        public string Ping()
+        {
+            return PingAsync().Result;
+        }
+
+        public async Task<string> QueryOrderAsync(int page = 1)
         {
             string url = $"{this.ApiBaseUrl}query-order";
 
@@ -90,15 +95,25 @@ namespace Afdian.Sdk
             });
         }
 
-        public async Task<ResponseModels.QueryOrderResponseModel> QueryOrderModel(int page = 1)
+        public string QueryOrder(int page = 1)
         {
-            string jsonStr = await QueryOrder(page);
+            return QueryOrderAsync(page).Result;
+        }
+
+        public async Task<ResponseModels.QueryOrderResponseModel> QueryOrderModelAsync(int page = 1)
+        {
+            string jsonStr = await QueryOrderAsync(page);
             ResponseModels.QueryOrderResponseModel responseModel = Utils.JsonUtil.JsonStr2Obj<ResponseModels.QueryOrderResponseModel>(jsonStr);
 
             return responseModel;
         }
 
-        public async Task<string> QuerySponsor(int page = 1)
+        public ResponseModels.QueryOrderResponseModel QueryOrderModel(int page = 1)
+        {
+            return QueryOrderModelAsync(page).Result;
+        }
+
+        public async Task<string> QuerySponsorAsync(int page = 1)
         {
             string url = $"{this.ApiBaseUrl}query-sponsor";
 
@@ -122,12 +137,22 @@ namespace Afdian.Sdk
             });
         }
 
-        public async Task<ResponseModels.QuerySponsorResponseModel> QuerySponsorModel(int page = 1)
+        public string QuerySponsor(int page = 1)
         {
-            string jsonStr = await QuerySponsor(page);
+            return QuerySponsorAsync(page).Result;
+        }
+
+        public async Task<ResponseModels.QuerySponsorResponseModel> QuerySponsorModelAsync(int page = 1)
+        {
+            string jsonStr = await QuerySponsorAsync(page);
             ResponseModels.QuerySponsorResponseModel responseModel = Utils.JsonUtil.JsonStr2Obj<ResponseModels.QuerySponsorResponseModel>(jsonStr);
 
             return responseModel;
+        }
+
+        public ResponseModels.QuerySponsorResponseModel QuerySponsorModel(int page = 1)
+        {
+            return QuerySponsorModelAsync(page).Result;
         }
 
         #endregion

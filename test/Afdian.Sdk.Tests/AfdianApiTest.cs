@@ -25,7 +25,7 @@ namespace Afdian.Sdk.Tests
         [Fact]
         public void Ping()
         {
-            string jsonStr = this.AfdianClient.Ping().Result;
+            string jsonStr = this.AfdianClient.PingAsync().Result;
 
             Output.WriteLine($"{nameof(AfdianApiTest.Ping)}:");
             Output.WriteLine(jsonStr);
@@ -36,7 +36,7 @@ namespace Afdian.Sdk.Tests
         [Fact]
         public void QueryOrder()
         {
-            string jsonStr = this.AfdianClient.QueryOrder().Result;
+            string jsonStr = this.AfdianClient.QueryOrderAsync().Result;
 
             Output.WriteLine($"{nameof(AfdianApiTest.QueryOrder)}:");
             Output.WriteLine(jsonStr);
@@ -47,7 +47,7 @@ namespace Afdian.Sdk.Tests
         [Fact]
         public void QuerySponsor()
         {
-            string jsonStr = this.AfdianClient.QuerySponsor().Result;
+            string jsonStr = this.AfdianClient.QuerySponsorAsync().Result;
 
             Output.WriteLine($"{nameof(AfdianApiTest.QuerySponsor)}:");
             Output.WriteLine(jsonStr);
