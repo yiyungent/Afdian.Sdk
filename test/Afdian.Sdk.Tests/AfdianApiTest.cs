@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -12,9 +13,12 @@ namespace Afdian.Sdk.Tests
 
         public AfdianClient AfdianClient { get; set; }
 
-        public AfdianApiTest(ITestOutputHelper output)
+        public IConfiguration Configuration { get; }
+
+        public AfdianApiTest(ITestOutputHelper output, IConfiguration configuration)
         {
-            this.AfdianClient = new AfdianClient(userId: "", token: "");
+            this.Configuration = configuration;
+            this.AfdianClient = new AfdianClient(userId: this.Configuration["SecretsKeys:AfdianUserId"], token: this.Configuration["SecretsKeys:AfdianToken"]);
             this.Output = output;
         }
 
@@ -28,5 +32,28 @@ namespace Afdian.Sdk.Tests
 
             Assert.NotEmpty(jsonStr);
         }
+
+        [Fact]
+        public void QueryOrder()
+        {
+            string jsonStr = this.AfdianClient.QueryOrder().Result;
+
+            Output.WriteLine($"{nameof(AfdianApiTest.QueryOrder)}:");
+            Output.WriteLine(jsonStr);
+
+            Assert.NotEmpty(jsonStr);
+        }
+
+        [Fact]
+        public void QuerySponsor()
+        {
+            string jsonStr = this.AfdianClient.QuerySponsor().Result;
+
+            Output.WriteLine($"{nameof(AfdianApiTest.QuerySponsor)}:");
+            Output.WriteLine(jsonStr);
+
+            Assert.NotEmpty(jsonStr);
+        }
+
     }
 }
