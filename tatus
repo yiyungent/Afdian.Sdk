@@ -1,0 +1,40 @@
+[1mdiff --git a/src/Afdian.Server/Controllers/BadgeController.cs b/src/Afdian.Server/Controllers/BadgeController.cs[m
+[1mindex 5971f81..b83f7a8 100644[m
+[1m--- a/src/Afdian.Server/Controllers/BadgeController.cs[m
+[1m+++ b/src/Afdian.Server/Controllers/BadgeController.cs[m
+[36m@@ -133,19 +133,15 @@[m [mnamespace Afdian.Server.Controllers[m
+         }[m
+ [m
+         /// <summary>[m
+[31m-        /// 显式根据 user_id,token 获取 Badge[m
+[32m+[m[32m        /// 显式根据 user_id, token 获取 Badge[m
+         /// </summary>[m
+         /// <remarks>[m
+[31m-        /// 爱发电获取 user_id,token:    [m
+[32m+[m[32m        /// 爱发电获取 user_id, token:[m[41m    [m
+         /// [https://afdian.net/dashboard/dev](https://afdian.net/dashboard/dev)[m
+         /// [m
+         /// 在 README.md 中引用 爱发电 Badge:  [m
+[31m-        /// `[![爱发电](https://afdian.moeci.com/{badgeId}/badge.svg)](https://afdian.net/{爱发电用户名})`[m
+[32m+[m[32m        /// `[![爱发电](https://afdian.moeci.com/{userId}/{token}/badge.svg)](https://afdian.net/{爱发电用户名})`[m
+         /// [m
+[31m-        /// 例如下方:   [m
+[31m-        /// `[![爱发电](https://afdian.moeci.com/1/badge.svg)](https://afdian.net/@yiyun)`  [m
+[31m-        /// [m
+[31m-        /// [![爱发电](https://afdian.moeci.com/1/badge.svg)](https://afdian.net/@yiyun)[m
+         /// </remarks>[m
+         /// <param name="userId"></param>[m
+         /// <param name="token"></param>[m
+[1mdiff --git a/src/Afdian.Server/RequestModels/BadgeRequestModel.cs b/src/Afdian.Server/RequestModels/BadgeRequestModel.cs[m
+[1mindex 5178755..30fcdd0 100644[m
+[1m--- a/src/Afdian.Server/RequestModels/BadgeRequestModel.cs[m
+[1m+++ b/src/Afdian.Server/RequestModels/BadgeRequestModel.cs[m
+[36m@@ -11,7 +11,7 @@[m [mnamespace Afdian.Server.RequestModels[m
+         /// <summary>[m
+         /// 过滤 方案ID[m
+         /// </summary>[m
+[31m-        public string PlanId { get; set; } = "";[m
+[32m+[m[32m        public string planId { get; set; } = "";[m
+ [m
+ [m
+     }[m

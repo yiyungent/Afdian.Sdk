@@ -11,7 +11,7 @@ namespace Afdian.Server.RequestModels
         /// <summary>
         /// 过滤 方案ID
         /// </summary>
-        public string PlanId { get; set; } = "";
+        public string planId { get; set; } = "";
 
 
     }

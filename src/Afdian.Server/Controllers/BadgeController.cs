@@ -133,19 +133,15 @@ namespace Afdian.Server.Controllers
         }
 
         /// <summary>
-        /// 显式根据 user_id,token 获取 Badge
+        /// 显式根据 user_id, token 获取 Badge
         /// </summary>
         /// <remarks>
-        /// 爱发电获取 user_id,token:    
+        /// 爱发电获取 user_id, token:    
         /// [https://afdian.net/dashboard/dev](https://afdian.net/dashboard/dev)
         /// 
         /// 在 README.md 中引用 爱发电 Badge:  
-        /// `[![爱发电](https://afdian.moeci.com/{badgeId}/badge.svg)](https://afdian.net/{爱发电用户名})`
+        /// `[![爱发电](https://afdian.moeci.com/{userId}/{token}/badge.svg)](https://afdian.net/{爱发电用户名})`
         /// 
-        /// 例如下方:   
-        /// `[![爱发电](https://afdian.moeci.com/1/badge.svg)](https://afdian.net/@yiyun)`  
-        /// 
-        /// [![爱发电](https://afdian.moeci.com/1/badge.svg)](https://afdian.net/@yiyun)
         /// </remarks>
         /// <param name="userId"></param>
         /// <param name="token"></param>
