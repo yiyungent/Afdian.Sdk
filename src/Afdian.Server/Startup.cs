@@ -52,10 +52,11 @@ namespace Afdian.Server
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(options =>
             {
+                string version = Utils.CommonUtil.Version();
                 // https://docs.microsoft.com/zh-cn/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&tabs=visual-studio
-                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                options.SwaggerDoc($"v{version}", new Microsoft.OpenApi.Models.OpenApiInfo
                 {
-                    Version = "v1",
+                    Version = $"v{version}",
                     Title = "爱发电 Badge",
                     Description = "爱发电 Badge - 由 Afdian.Server 构建",
                     TermsOfService = new Uri("https://github.com/yiyungent/Afdian.Sdk"),
@@ -108,8 +109,17 @@ namespace Afdian.Server
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwagger(options =>
+            {
+                //options
+            });
+            app.UseSwaggerUI(options =>
+            {
+                options.InjectJavascript("/swagger-ui/baidu-tongji.js");
+                options.DocumentTitle = "Afdian.Server | 基于 Afdian.Sdk 的 非官方 爱发电 在线辅助服务";
+                string version = Utils.CommonUtil.Version();
+                options.SwaggerEndpoint($"/swagger/v{version}/swagger.json", $"Afdian.Server-v{version}");
+            });
 
             app.UseRouting();
             app.UseCors();
