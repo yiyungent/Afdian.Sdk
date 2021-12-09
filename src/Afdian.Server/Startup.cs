@@ -76,6 +76,17 @@ namespace Afdian.Server
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
+            // 任意跨域
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policyBuilder =>
+                {
+                    policyBuilder.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                });
+            });
+
             // The Telegram.Bot library heavily depends on Newtonsoft.Json library to deserialize
             // incoming webhook updates and send serialized responses back.
             // Read more about adding Newtonsoft.Json to ASP.NET Core pipeline:
