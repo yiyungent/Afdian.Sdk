@@ -92,7 +92,7 @@ namespace Afdian.Server.Controllers
         }
 
         /// <summary>
-        /// 创建 Badge, 返回 Badge ID
+        /// 1.创建 Badge, 返回 Badge ID / 2.忘记 Badge ID ? 查询 Badge ID
         /// </summary>
         /// <remarks>
         /// 爱发电获取 user_id,token:    
@@ -115,7 +115,16 @@ namespace Afdian.Server.Controllers
 
                 return responseModel;
             }
-            Badge badge = new Badge()
+            Badge badge = _applicationDbContext.Badge.FirstOrDefault(m => m.UserId == userId && m.Token == token);
+            if (badge != null)
+            {
+                responseModel.code = 1;
+                responseModel.message = "成功: 已存在此 userId,token对 创建的Badge";
+                responseModel.badgeId = badge.Id;
+
+                return responseModel;
+            }
+            badge = new Badge()
             {
                 CreateTime = DateTime.Now,
                 UserId = userId,
@@ -126,7 +135,7 @@ namespace Afdian.Server.Controllers
             await _applicationDbContext.SaveChangesAsync();
 
             responseModel.code = 1;
-            responseModel.message = "成功";
+            responseModel.message = "成功: 创建新Badge";
             responseModel.badgeId = badge.Id;
 
             return responseModel;
