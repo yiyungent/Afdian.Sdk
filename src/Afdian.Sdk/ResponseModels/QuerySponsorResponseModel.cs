@@ -24,7 +24,7 @@ namespace Afdian.Sdk.ResponseModels
 
         public class DataModel
         {
-            public ListItemModel[] list { get; set; }
+            public List<ListItemModel> list { get; set; }
 
             public int total_count { get; set; }
 
@@ -65,7 +65,7 @@ namespace Afdian.Sdk.ResponseModels
                     public int sale_limit_count { get; set; }
                     public bool need_invite_code { get; set; }
                     public int expire_time { get; set; }
-                    public object[] sku_processed { get; set; }
+                    public List<object> sku_processed { get; set; }
                     public int rankType { get; set; }
                 }
 
@@ -90,7 +90,7 @@ namespace Afdian.Sdk.ResponseModels
                     public int sale_limit_count { get; set; }
                     public bool need_invite_code { get; set; }
                     public int expire_time { get; set; }
-                    public object[] sku_processed { get; set; }
+                    public List<object> sku_processed { get; set; }
                     public int rankType { get; set; }
                 }
 

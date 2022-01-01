@@ -24,13 +24,13 @@ namespace Afdian.Sdk.ResponseModels
 
         public class DataModel
         {
-            public OrderModel[] list { get; set; }
+            public List<ListItemModel> list { get; set; }
 
             public int total_count { get; set; }
 
             public int total_page { get; set; }
 
-            public class OrderModel
+            public class ListItemModel
             {
                 /// <summary>
                 /// 订单号
@@ -95,7 +95,7 @@ namespace Afdian.Sdk.ResponseModels
                 /// <summary>
                 /// 如果为售卖类型，以数组形式表示具体型号
                 /// </summary>
-                public SkuDetailItemModel[] sku_detail { get; set; }
+                public List<SkuDetailItemModel> sku_detail { get; set; }
 
                 /// <summary>
                 /// 收件人
