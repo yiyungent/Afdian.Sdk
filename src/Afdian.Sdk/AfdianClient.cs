@@ -20,7 +20,7 @@ namespace Afdian.Sdk
         {
             this.UserId = userId;
             this.Token = token;
-            this.ApiBaseUrl = "https://afdian.net/api/open/";
+            this.ApiBaseUrl = "https://afdian.com/api/open/";
         }
         #endregion
 
