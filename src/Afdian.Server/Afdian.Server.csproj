@@ -7,7 +7,7 @@
 		<UserSecretsId>ed01adf5-b266-4e3b-befc-e8a50604c672</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>..\..</DockerfileContext>
-		<Version>0.2.6</Version>
+		<Version>0.2.7</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -21,7 +21,7 @@
 
 	<!-- 方便开发debug,与发布到nuget -->
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="Afdian.Sdk" Version="0.2.0" />
+		<PackageReference Include="Afdian.Sdk" Version="0.3.1" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
 		<ProjectReference Include="..\Afdian.Sdk\Afdian.Sdk.csproj" />
